@@ -130,8 +130,6 @@ Resource Quotas
  limits.memory		0	4Gi
  requests.cpu		0	1
  requests.memory	0	1Gi
-
-No resource limits.
 ```
 
 
