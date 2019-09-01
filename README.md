@@ -200,3 +200,7 @@ spec:
 ```bash
 $ kubectl create -f k8s/create-service.yaml
 ```
+## Access the application
+```bash
+$  curl http://$(minikube ip):30001/k8s/dara
+```
