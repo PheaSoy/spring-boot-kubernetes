@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-boot-k8s
+data:
+  application.properties: |-
+    user.name=pheasoy

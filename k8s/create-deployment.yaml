@@ -1,7 +1,7 @@
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name:   
+  name:   spring-boot-k8s-deployment
   labels:
     app: spring-boot-k8s
   namespace: example-k8s
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: spring-boot-k8s
-        image: spring-boot-k8s:v1
+        image: spring-boot-k8s:v3
         ports:
         - containerPort: 9977
         resources:

@@ -204,3 +204,7 @@ $ kubectl create -f k8s/create-service.yaml
 ```bash
 $  curl http://$(minikube ip):30001/k8s/dara
 ```
+## Create configmap
+```bash
+$ kubectl create configmap spring-boot-k8s --from-file k8s/user.properties 
+```

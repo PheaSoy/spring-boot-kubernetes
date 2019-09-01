@@ -2,19 +2,26 @@
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class K8SApplication {
+@ConfigurationProperties
+public class K8SApplication implements CommandLineRunner {
 
-    String name = K8SApplication.class.getName();
 
-    Logger logger = LoggerFactory.getLogger(name);
+
+    Logger logger = LoggerFactory.getLogger(K8SApplication.class);
+
+    @Value("${use.name:default-name}")
+    String userName;
 
     public static void main(String[] args) {
         SpringApplication.run(K8SApplication.class, args);
@@ -26,5 +33,10 @@ public class K8SApplication {
         logger.info("Got the request with name:{}",name);
         return String.format("Hi %s- I am a SpringBoot Application run inside Kubernetes",name);
 
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        logger.info("Username fetched from k8s ConfigMap is :{}",userName);
     }
 }
