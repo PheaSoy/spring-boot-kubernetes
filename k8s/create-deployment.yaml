@@ -1,0 +1,29 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name:   
+  labels:
+    app: spring-boot-k8s
+  namespace: example-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-k8s
+  template:
+    metadata:
+      labels:
+        app: spring-boot-k8s
+    spec:
+      containers:
+      - name: spring-boot-k8s
+        image: spring-boot-k8s:v1
+        ports:
+        - containerPort: 9977
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests: 
+            memory: "1Gi"
+            cpu: "500m"

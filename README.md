@@ -84,6 +84,10 @@ $ kubectl create -f k8s/create-namespace.yml
 ```bash
 $ kubectl get ns
 ```
+## Swithc namespace
+```bash
+$ kubectl config set-context minikube --namespace example-k8s
+```
 ## Describe namespace
 ```bash
 $  kubectl describe ns example-k8s
@@ -131,6 +135,46 @@ Resource Quotas
  limits.memory		0	4Gi
  requests.cpu		0	1
  requests.memory	0	1Gi
+```
+## Create Deployment
+* Create create-deployment.yaml
+```yaml
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name:   
+  labels:
+    app: spring-boot-k8s
+  namespace: example-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-k8s
+  template:
+    metadata:
+      labels:
+        app: spring-boot-k8s
+    spec:
+      containers:
+      - name: spring-boot-k8s
+        image: spring-boot-k8s:v1
+        ports:
+        - containerPort: 9977
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests: 
+            memory: "1Gi"
+            cpu: "500m"
+```
+```bash
+$ kubectl create -f k8s/create-deployment.yaml
+```
+## Scale deployment
+```bash
+$ kubectl scale deployment spring-boot-k8s-deployment --replicas=2
 ```
 
 
