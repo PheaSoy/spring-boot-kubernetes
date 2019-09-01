@@ -8,10 +8,14 @@ COPY  target/spring-boot-kubernetes-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 9977
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 ```
-### Build image
+## Build image
 ```bash
 $ docker build -t spring-boot-k8s:v1 .
 ```
+
+## Install minikube for single cluster
+
+* [This is the official document](https://kubernetes.io/docs/tasks/tools/install-minikube/) - minikube-install
 
 ## Set docker to use minikube daemon
 ```bash
