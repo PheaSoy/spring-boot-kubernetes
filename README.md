@@ -80,10 +80,36 @@ metadata:
 ```bash
 $ kubectl create -f k8s/create-namespce.yml
 ```
-
+## Get namespace
+```bash
+$ kubectl get ns
+```
+## Describe namespace
+```bash
+$  kubectl describe ns example-k8s
+```
 ## Delete namespace
 ```bash
 $ kubectl delete namespaces example-k8s
+```
+
+## Create ResourceQuota
+```yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resource-quota-mem-cpu-example
+  namespace: example-k8s
+spec:
+  hard: 
+    requests.cpu: "1"
+    requests.memory: 1Gi
+    limits.cpu: "2"
+    limits.memory: 4Gi
+```
+
+```bash
+$ kubectl create -f k8s/create-resource-quota.yaml 
 ```
 
 
