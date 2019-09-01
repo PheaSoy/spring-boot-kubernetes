@@ -20,7 +20,7 @@ $ eval $(minikube docker-env)
 ```
 ## Create Deployment
 ```base
-kubectl run spring-boot-k8s --image=spring-boot-k8s:v1 --port=9977
+$ kubectl run spring-boot-k8s --image=spring-boot-k8s:v1 --port=9977
 ```
 
 ## Get POD
