@@ -10,7 +10,7 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 ```
 ### Build image
 ```bash
-docker build -t spring-boot-k8s .
+$ docker build -t spring-boot-k8s .
 ```
 
 ## Create  namespace
@@ -23,12 +23,12 @@ metadata:
 ```
 
 ```bash
-kubectl create -f k8s/create-namespce.yml
+$ kubectl create -f k8s/create-namespce.yml
 ```
 
 ## Delete namespace
 ```bash
-kubectl delete namespaces 
+$ kubectl delete namespaces 
 ```
 
 
