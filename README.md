@@ -76,9 +76,9 @@ kind: Namespace
 metadata: 
   name: example-k8s
 ```
-
+* Create create-namespace.yml
 ```bash
-$ kubectl create -f k8s/create-namespce.yml
+$ kubectl create -f k8s/create-namespace.yml
 ```
 ## Get namespace
 ```bash
@@ -94,6 +94,7 @@ $ kubectl delete namespaces example-k8s
 ```
 
 ## Create ResourceQuota
+* Create create-resource-quota.yaml
 ```yaml
 apiVersion: v1
 kind: ResourceQuota
