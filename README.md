@@ -1,4 +1,4 @@
-# Spring Boot on Kubernetes
+# spring-boot-kubernetes
 ## Create Dockerfile
 ```
 FROM openjdk:8-jdk-alpine
@@ -31,4 +31,4 @@ kubectl create -f k8s/create-namespce.yml
 kubectl delete namespaces 
 ```
 
-# spring-boot-kubernetes
+
