@@ -75,7 +75,7 @@ $ kubectl create -f k8s/create-namespce.yml
 
 ## Delete namespace
 ```bash
-$ kubectl delete namespaces 
+$ kubectl delete namespaces example-k8s
 ```
 
 
