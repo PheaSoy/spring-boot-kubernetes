@@ -17,6 +17,10 @@ $ docker build -t spring-boot-k8s:v1 .
 
 * [This is the official document](https://kubernetes.io/docs/tasks/tools/install-minikube/) - minikube-install
 
+## Start minikube
+```base
+$ minikube start
+```
 ## Set docker to use minikube daemon
 ```bash
 $ eval $(minikube docker-env)
