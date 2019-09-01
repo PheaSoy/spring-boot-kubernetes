@@ -137,7 +137,7 @@ Resource Quotas
  requests.memory	0	1Gi
 ```
 ## Create Deployment
-* Create create-deployment.yaml
+* Create create-deployment.yaml file
 ```yaml
 kind: Deployment
 apiVersion: extensions/v1beta1
@@ -175,6 +175,26 @@ $ kubectl create -f k8s/create-deployment.yaml
 ## Scale deployment
 ```bash
 $ kubectl scale deployment spring-boot-k8s-deployment --replicas=2
+```
+## Create service access outside the cluster
+* Create create-service.yaml file
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: spring-boot-k8s-service
+  name: spring-boot-k8s-service
+  namespace: example-k8s
+spec:
+  ports:
+  - nodePort: 30001 # Port access outside the cluser
+    port: 9977 # Port access inside the cluster
+    protocol: TCP
+    targetPort: 9977 # Port forward to inside the port which container running
+  selector:
+    app: spring-boot-k8s
+  type: NodePort
 ```
 
 
