@@ -9,7 +9,7 @@ EXPOSE 9977
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 ```
 ### Build image
-```$xslt
+```bash
 docker build -t spring-boot-k8s .
 ```
 
@@ -22,7 +22,7 @@ metadata:
   name: example-k8s
 ```
 
-```$xslt
+```bash
 kubectl create -f k8s/create-namespce.yml
 ```
 
