@@ -111,5 +111,27 @@ spec:
 ```bash
 $ kubectl create -f k8s/create-resource-quota.yaml 
 ```
+* Get the resource
+```bash
+$ kubectl describe ns example-k8s
+```
+* ===>
+```bash
+Name:		example-k8s
+Labels:		app=spring-boot
+Annotations:	<none>
+Status:		Active
+
+Resource Quotas
+ Name:			resource-quota-mem-cpu-example
+ Resource		Used	Hard
+ --------		---	---
+ limits.cpu		0	2
+ limits.memory		0	4Gi
+ requests.cpu		0	1
+ requests.memory	0	1Gi
+
+No resource limits.
+```
 
 
