@@ -197,4 +197,6 @@ spec:
   type: NodePort
 ```
 
-
+```bash
+$ kubectl create -f k8s/create-service.yaml
+```
