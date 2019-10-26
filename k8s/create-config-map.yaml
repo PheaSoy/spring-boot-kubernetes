@@ -6,3 +6,4 @@ metadata:
 data:
   application.properties: |-
     user.name=pheasoy
+    user.blog=www.learning-at-farm.com/spring-boot-kubernetes

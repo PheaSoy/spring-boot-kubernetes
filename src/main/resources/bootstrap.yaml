@@ -5,10 +5,8 @@ spring:
     kubernetes:
       reload:
         enabled: true
-        mode: polling
+        mode: POLLING
         period: 5000
       config:
-        name:
-        sources:
-          - name: ${spring.application.name} #Because my namespace same with application name.
-          - namespace: example-k8s
+       # - name: ${spring.application.name} #Because my namespace same with application name.
+        - namespace: example-k8s
