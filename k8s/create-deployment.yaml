@@ -17,13 +17,13 @@ spec:
     spec:
       containers:
       - name: spring-boot-k8s
-        image: spring-boot-k8s:v3
+        image: spring-boot-k8s:v4
         ports:
         - containerPort: 9977
         resources:
           limits:
-            memory: "2Gi"
-            cpu: "1000m"
-          requests: 
             memory: "1Gi"
             cpu: "500m"
+          requests: 
+            memory: "256Mi"
+            cpu: "200m"

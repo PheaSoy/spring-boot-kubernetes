@@ -37,6 +37,6 @@ public class K8SApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        logger.info("Username fetched from k8s ConfigMap is :{}",userName);
+        logger.info("User name fetched from k8s  ConfigMap <spring-boot-k8s> is :{}",userName);
     }
 }

@@ -8,6 +8,7 @@ spring:
         mode: polling
         period: 5000
       config:
+        name:
         sources:
-          - name: other
-          - name: ${spring.application.name}
+          - name: ${spring.application.name} #Because my namespace same with application name.
+          - namespace: example-k8s

@@ -1,4 +1,4 @@
-# spring-boot-kubernetes
+eval $(minikube docker-env)# spring-boot-kubernetes
 ## Create Dockerfile
 ```
 FROM openjdk:8-jdk-alpine
@@ -172,10 +172,16 @@ spec:
 ```bash
 $ kubectl create -f k8s/create-deployment.yaml
 ```
-## Scale deployment
+### Scale deployment
 ```bash
 $ kubectl scale deployment spring-boot-k8s-deployment --replicas=2
 ```
+
+### Update deployment
+``` bash
+ kubectl set image deployment/spring-boot-k8s-deployment spring-boot-k8s=spring-boot-k8s:v5 --record
+```
+
 ## Create service access outside the cluster
 * Create create-service.yaml file
 ```yaml
@@ -208,3 +214,4 @@ $  curl http://$(minikube ip):30001/k8s/dara
 ```bash
 $ kubectl create configmap spring-boot-k8s --from-file k8s/user.properties 
 ```
+
