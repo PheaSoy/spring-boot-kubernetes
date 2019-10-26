@@ -1,4 +1,4 @@
-eval $(minikube docker-env)# spring-boot-kubernetes
+# spring-boot-kubernetes
 ## Create Dockerfile
 ```
 FROM openjdk:8-jdk-alpine
