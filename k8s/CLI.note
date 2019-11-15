@@ -1,2 +1,5 @@
 <switch namespace>
 kubectl config set-context $(kubectl config current-context) --namespace=example-k8s
+
+<check pod which node>
+kubectl get pod -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name --all-namespaces | grep blue
