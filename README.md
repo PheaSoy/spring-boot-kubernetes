@@ -41,31 +41,6 @@ $ kubectl get pod
 $ kubectl get pod -w
 ```
 
-## Expose service for deployment
-```base
-$ kubectl expose deployment spring-boot-k8s --type=NodePort
-```
-## Get the URL of the expose service
-```bash
-$ minikube service spring-boot-k8s --url
-```
-## Access the application
-```bash
-$ curl http://192.168.64.2:32352/k8s/sidara
-```
-* Response
-```
-HTTP/1.1 200 
-Content-Type: text/plain;charset=UTF-8
-Content-Length: 62
-Date: Sun, 01 Sep 2019 05:48:36 GMT
-Hi sidara- I am a SpringBoot Application run inside Kubernetes
-```
-## Delete service
-```bash
-$ kubectl delete service spring-boot-k8s
-```
-
 
 ## Switch 
 ## Create  namespace
@@ -142,7 +117,7 @@ Resource Quotas
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name:   
+  name:   spring-boot-k8s-deployment
   labels:
     app: spring-boot-k8s
   namespace: example-k8s
@@ -158,16 +133,16 @@ spec:
     spec:
       containers:
       - name: spring-boot-k8s
-        image: spring-boot-k8s:v1
+        image: spring-boot-k8s:v4
         ports:
         - containerPort: 9977
         resources:
           limits:
-            memory: "2Gi"
-            cpu: "1000m"
-          requests: 
             memory: "1Gi"
             cpu: "500m"
+          requests: 
+            memory: "256Mi"
+            cpu: "200m""
 ```
 ```bash
 $ kubectl create -f k8s/create-deployment.yaml
@@ -182,6 +157,32 @@ $ kubectl scale deployment spring-boot-k8s-deployment --replicas=2
  kubectl set image deployment/spring-boot-k8s-deployment spring-boot-k8s=spring-boot-k8s:v5 --record
 ```
 
+## Expose service for deployment
+```base
+$ kubectl expose deployment spring-boot-k8s-deployment --name=spring-boot-service --type=NodePort
+```
+## Get the URL of the expose service
+```bash
+$ minikube service spring-boot-service -n example-k8s --url
+```
+
+## Access the application
+```bash
+$ curl http://192.168.64.2:32352/k8s/sidara
+```
+* Response
+```
+HTTP/1.1 200 
+Content-Type: text/plain;charset=UTF-8
+Content-Length: 62
+Date: Sun, 01 Sep 2019 05:48:36 GMT
+Hi sidara- I am a SpringBoot Application run inside Kubernetes
+```
+## Delete service
+```bash
+$ kubectl delete service spring-boot-k8s
+```
+
 ## Create service access outside the cluster
 * Create create-service.yaml file
 ```yaml
@@ -194,7 +195,7 @@ metadata:
   namespace: example-k8s
 spec:
   ports:
-  - nodePort: 30001 # Port access outside the cluser
+  - nodePort: 30001 # Port access outside the cluster
     port: 9977 # Port access inside the cluster
     protocol: TCP
     targetPort: 9977 # Port forward to inside the port which container running
@@ -206,11 +207,13 @@ spec:
 ```bash
 $ kubectl create -f k8s/create-service.yaml
 ```
-## Access the application
+## Access The Application
+
 ```bash
 $  curl http://$(minikube ip):30001/k8s/dara
 ```
-## Create configmap
+
+## Create ConfigMap
 ```bash
 $ kubectl create configmap spring-boot-k8s --from-file k8s/user.properties 
 ```
