@@ -59,9 +59,13 @@ $ kubectl create -f k8s/create-namespace.yml
 ```bash
 $ kubectl get ns
 ```
-## Swithc namespace
+## Switch namespace
 ```bash
 $ kubectl config set-context minikube --namespace example-k8s
+```
+* You can also install [kubens](https://github.com/ahmetb/kubectx/blob/master/kubens)
+```bash
+$ kubens example-k8s
 ```
 ## Describe namespace
 ```bash
