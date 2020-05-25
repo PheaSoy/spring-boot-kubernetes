@@ -33,7 +33,7 @@ public class ControllerTest {
         @Bean
         UserService userService() {
             return new UserService();
-        }
+            }
     }
 
     @Test

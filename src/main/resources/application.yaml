@@ -3,3 +3,11 @@ server:
 spring:
   main:
     lazy-initialization: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  health:
+    probes:
+      enabled: true

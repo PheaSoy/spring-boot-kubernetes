@@ -27,3 +27,15 @@ spec:
           requests: 
             memory: "256Mi"
             cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 9977
+            initialDelaySeconds: 10
+            periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 9977
+            initialDelaySeconds: 30
+            periodSeconds: 5
