@@ -25,7 +25,6 @@ public class K8SApplication implements CommandLineRunner {
         SpringApplication.run(K8SApplication.class, args);
     }
 
-
     @Override
     public void run(String... args) throws Exception {
         logger.info(" Fetched user from k8s ConfigMap <spring-boot-k8s> is :{}", userConfig);
