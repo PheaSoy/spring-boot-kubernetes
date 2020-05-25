@@ -2,7 +2,6 @@ package org.soyphea.k8s.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.soyphea.k8s.K8SApplication;
 import org.soyphea.k8s.config.UserConfig;
 import org.soyphea.k8s.domain.User;
 import org.soyphea.k8s.srevice.UserService;
@@ -24,7 +23,6 @@ public class Controller {
     @Autowired
     private UserService userService;
 
-
     public Controller(){
         logger.info("Initialised Bean.");
     }
@@ -39,4 +37,6 @@ public class Controller {
     public List<User> getUsersByContainName(@PathVariable("contain_name") String containName){
         return userService.getUser(containName);
     }
+
+
 }
