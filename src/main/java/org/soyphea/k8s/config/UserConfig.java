@@ -1,5 +1,6 @@
 package org.soyphea.k8s.config;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Component
 //@Validated
 @Data
+@AllArgsConstructor
 public class UserConfig {
 
 //    @NotEmpty(message = "name must be not empty")
