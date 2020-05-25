@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: spring-boot-k8s
-        image: spring-boot-k8s:v4
+        image: spring-boot-k8s:v1
         ports:
         - containerPort: 9977
         resources:

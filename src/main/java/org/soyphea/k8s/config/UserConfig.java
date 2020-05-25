@@ -9,13 +9,13 @@ import javax.validation.constraints.NotEmpty;
 
 @ConfigurationProperties(prefix = "user")
 @Component
-@Validated
+//@Validated
 @Data
 public class UserConfig {
 
-    @NotEmpty(message = "name must be not empty")
+//    @NotEmpty(message = "name must be not empty")
     String name;
 
-    @NotEmpty(message = "blog must be not empty")
+//    @NotEmpty(message = "blog must be not empty")
     String blog;
 }

@@ -1,2 +1,5 @@
 server:
   port: 9977
+spring:
+  main:
+    lazy-initialization: true
