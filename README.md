@@ -137,7 +137,7 @@ spec:
     spec:
       containers:
       - name: spring-boot-k8s
-        image: spring-boot-k8s:v4
+        image: spring-boot-k8s:v1
         ports:
         - containerPort: 9977
         resources:
@@ -146,7 +146,19 @@ spec:
             cpu: "500m"
           requests: 
             memory: "256Mi"
-            cpu: "200m""
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 9977
+          initialDelaySeconds: 60
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 9977
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
 ```
 ```bash
 $ kubectl create -f k8s/create-deployment.yaml
