@@ -9,8 +9,8 @@ pipeline {
 
         stage('SAST') {
             steps {
-                sh 'chmod +x gradlew'
-                sh './gradlew sonarqube -Dsonar.login=eb402dfd87ab83bfa88e9047d9c7add47053da27 -Dsonar.branch.name=feature-tarea4'
+                sh 'chmod +x mvnw'
+                sh './mvnw sonarqube -Dsonar.login=eb402dfd87ab83bfa88e9047d9c7add47053da27 -Dsonar.branch.name=feature-tarea4'
             }
         }
     }
