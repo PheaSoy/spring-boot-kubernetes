@@ -22,10 +22,10 @@ jobs:
   steps:
   - task: SonarCloudPrepare@1
     inputs:
-      SonarCloud: 'tarea-devsecops'
-      organization: 'clagosu'
-      projectKey: 'clagosu_pet-clinic'
-      projectName: 'pet-clinic'
+      SonarCloud: 'lab-devsecops'
+      organization: 'devsecopslab1'
+      projectKey: 'julianks_spring-boot-kubernetes'
+      projectName: 'spring-boot-kubernetes'
     displayName: 'Preparing Sonarqube Environment'
     
   - task: Gradle@3
