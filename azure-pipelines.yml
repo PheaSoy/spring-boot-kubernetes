@@ -22,7 +22,7 @@ jobs:
   steps:
   - task: SonarCloudPrepare@1
     inputs:
-      SonarCloud: 'lab-devsecops'
+      SonarCloud: 'Lab-SAST-DevSecOps'
       organization: 'devsecopslab1'
       projectKey: 'julianks_spring-boot-kubernetes'
       projectName: 'spring-boot-kubernetes'
