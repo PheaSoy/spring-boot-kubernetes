@@ -5,15 +5,13 @@ jobs:
 - job: build
   displayName: 'Build'
   steps:
-  - task: Gradle@3
+  - task: Maven@3
     inputs:
-      gradleWrapperFile: 'gradlew'
-      tasks: 'build'
+      mavenPomFile: 'pom.xml'
       publishJUnitResults: true
       testResultsFiles: '**/TEST-*.xml'
       javaHomeOption: 'JDKVersion'
       sonarQubeRunAnalysis: false
-      spotBugsAnalysis: false
 
 - job: sonar
   workspace:
@@ -28,14 +26,17 @@ jobs:
       projectName: 'spring-boot-kubernetes'
     displayName: 'Preparing Sonarqube Environment'
     
-  - task: Gradle@3
+  - task: Maven@3
     inputs:
-      gradleWrapperFile: 'gradlew'
-      tasks: "sonarqube"
+      mavenPomFile: 'pom.xml'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
       javaHomeOption: 'JDKVersion'
+      mavenVersionOption: 'Default'
+      mavenAuthenticateFeed: false
+      effectivePomSkip: false
       sonarQubeRunAnalysis: true
-      sqGradlePluginVersionChoice: 'specify'
-      sonarQubeGradlePluginVersion: '3.3'
+      sqMavenPluginVersionChoice: 'latest'
     displayName: 'Analyze current Branch'
     
   - task: SonarCloudPublish@1
@@ -47,3 +48,4 @@ jobs:
   #  inputs:
   #    SonarCloud: 'Sonarcloud'
   #    organization: 'devsecops-usach'
+
