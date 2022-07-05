@@ -40,8 +40,8 @@ dependencies {
 
 sonarqube {
   properties {
-    property "sonar.projectKey", "DevSecOps-USACH_pet-clinic"
-    property "sonar.organization", "devsecops-usach"
+    property "sonar.projectKey", "julianks_spring-boot-kubernetes"
+    property "sonar.organization", "julianks"
     property "sonar.host.url", "https://sonarcloud.io"
   }
 }
