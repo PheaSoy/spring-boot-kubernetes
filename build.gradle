@@ -41,7 +41,7 @@ dependencies {
 sonarqube {
   properties {
     property "sonar.projectKey", "julianks_spring-boot-kubernetes"
-    property "sonar.organization", "julianks"
+    property "sonar.organization", "devsecopslab1"
     property "sonar.host.url", "https://sonarcloud.io"
   }
 }
