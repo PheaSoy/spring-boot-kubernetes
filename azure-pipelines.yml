@@ -29,15 +29,17 @@ jobs:
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
+      goals: 'clean verify sonar:sonar'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      codeCoverageToolOption: 'JaCoCo'
       javaHomeOption: 'JDKVersion'
+      jdkVersionOption: default
       mavenVersionOption: 'Default'
       mavenAuthenticateFeed: false
       effectivePomSkip: false
       sonarQubeRunAnalysis: true
       sqMavenPluginVersionChoice: 'latest'
-    displayName: 'Analyze current Branch'
     
   - task: SonarCloudPublish@1
     inputs:
