@@ -25,7 +25,6 @@ jobs:
       projectKey: 'julianks_spring-boot-kubernetes'
       projectName: 'spring-boot-kubernetes'
     displayName: 'Preparing Sonarqube Environment'
-  
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
@@ -36,8 +35,7 @@ jobs:
       mavenAuthenticateFeed: false
       effectivePomSkip: false
       sonarQubeRunAnalysis: true
-      sqMavenPluginVersionChoice: 'latest'
-    
+      sqMavenPluginVersionChoice: 'latest'    
   - task: SonarCloudPublish@1
     inputs:
       pollingTimeoutSec: '300'
