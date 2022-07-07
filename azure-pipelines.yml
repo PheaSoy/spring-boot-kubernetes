@@ -12,6 +12,17 @@ jobs:
       testResultsFiles: '**/TEST-*.xml'
       javaHomeOption: 'JDKVersion'
       sonarQubeRunAnalysis: false
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: '$(Build.SourcesDirectory)'
+      contents: |
+          **/target/*.jar
+      targetFolder: '$(Build.ArtifactStagingDirectory)'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: appJar
+      publishLocation: 'Container'
 
 - job: sonar
   workspace:
@@ -46,3 +57,16 @@ jobs:
   #    SonarCloud: 'Sonarcloud'
   #    organization: 'devsecops-usach'
 
+- job: SCA
+  steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'appJar'
+      downloadPath: '$(System.ArtifactsDirectory)'
+  - task: dependency-check-build-task@6
+    inputs:
+      projectName: 'spring-boot'
+      scanPath: '$(System.ArtifactsDirectory)'
+      format: 'HTML'
