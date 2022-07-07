@@ -25,15 +25,13 @@ jobs:
       projectKey: 'julianks_spring-boot-kubernetes'
       projectName: 'spring-boot-kubernetes'
     displayName: 'Preparing Sonarqube Environment'
-    
+  
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
-      goals: 'clean verify sonar:sonar'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       javaHomeOption: 'JDKVersion'
-      jdkVersionOption: default
       mavenVersionOption: 'Default'
       mavenAuthenticateFeed: false
       effectivePomSkip: false
