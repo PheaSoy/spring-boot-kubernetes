@@ -24,7 +24,7 @@ stages:
     steps:
       - task: SonarCloudPrepare@1
         inputs:
-          SonarCloud: 'tarea-devsecops'
+          SonarCloud: 'tarea4-devsecops'
           organization: 'rboblanco'
           projectKey: 'rboblanco_pet-clinic-1'
           projectName: 'pet-clinic-1'
