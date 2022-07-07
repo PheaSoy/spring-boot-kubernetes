@@ -26,8 +26,8 @@ stages:
         inputs:
           SonarCloud: 'tarea4-devsecops'
           organization: 'rboblanco'
-          projectKey: 'rboblanco_pet-clinic-1'
-          projectName: 'pet-clinic-1'
+          projectKey: 'rboblanco_spring-boot-kubernetes'
+          projectName: 'rboblanco'
         displayName: 'Preparing Sonarqube Environment'
     
       - task: Gradle@3
