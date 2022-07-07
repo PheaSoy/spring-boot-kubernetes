@@ -58,6 +58,7 @@ jobs:
   #    organization: 'devsecops-usach'
 
 - job: SCA
+  dependsOn: build
   steps:
   - task: DownloadBuildArtifacts@0
     inputs:
