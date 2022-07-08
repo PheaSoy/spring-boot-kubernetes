@@ -50,3 +50,14 @@ stages:
   #  inputs:
   #    SonarCloud: 'Sonarcloud'
   #    organization: 'devsecops-usach'
+  
+   job: sca
+    steps:
+     - task: dependency-check-build-task@6
+       inputs:
+         projectName: 'Talleres4-5'
+         scanPath: '$(Pipeline.Workspace)'
+         format: 'HTML'
+       displayName: SCA
+       
+       
