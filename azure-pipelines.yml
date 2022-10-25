@@ -34,9 +34,9 @@ stages:
         echo Add other tasks to build, test, and deploy your project.
         echo See https://aka.ms/yaml
       displayName: 'Run a multi-line script'
-- stage: Container-Security 
+- stage: Container_Security 
   jobs:
-  - job: Container-Security
+  - job: Container_Security
     displayName: 'Container Security'
     steps:
     - script: echo Hello, world!
