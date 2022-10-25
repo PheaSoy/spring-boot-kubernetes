@@ -21,14 +21,14 @@ stages:
     - script: |
         echo Add other tasks to build, test, and deploy your project.
         echo See https://aka.ms/yaml
-      displayName: 'Run a multi-line script 1'
+      displayName: 'Run a multi-line script 1 '
 - stage: SCA 
   jobs:
   - job: SCA
     displayName: 'SCA'
     steps:
     - script: echo Hello, world!
-      displayName: 'Run a one-line script 2'
+      displayName: 'Run a one-line script 2 '
 
     - script: |
         echo Add other tasks to build, test, and deploy your project.
@@ -40,7 +40,7 @@ stages:
     displayName: 'Container Security'
     steps:
     - script: echo Hello, world!
-      displayName: 'Run a one-line script 3'
+      displayName: 'Run a one-line script 3 '
 
     - script: |
         echo Add other tasks to build, test, and deploy your project.
