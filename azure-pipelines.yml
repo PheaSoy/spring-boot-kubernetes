@@ -16,8 +16,19 @@ steps:
     projectKey: 'RSANZANA-DEVSECOPS-USACH_spring-boot-kubernetes'
     projectName: 'spring-boot-kubernetes'
 
+
 - task: sonarcloud-buildbreaker@2
   inputs:
     SonarCloud: 'DEVSECOPS-USACH'
     organization: 'rsanzana-devsecops-usach'
+
+- task: SQReport@1
+  inputs:
+    sqHost: 'https://sonarcloud.io'
+    sqPort: '443'
+    sqToken: '3c847113f9c8487d0890268839acb874e348789b'
+    sqKeys: 'RSANZANA-DEVSECOPS-USACH_spring-boot-kubernetes'
+    sqPath: '$(Build.ArtifactStagingDirectory)/.sq-report'
+    sqFileName: 'sonar_report.pdf'
+    sqIssuer: 'rsanzana'
 
