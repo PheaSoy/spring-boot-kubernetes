@@ -16,3 +16,8 @@ steps:
     projectKey: 'RSANZANA-DEVSECOPS-USACH_spring-boot-kubernetes'
     projectName: 'spring-boot-kubernetes'
 
+- task: sonarcloud-buildbreaker@2
+  inputs:
+    SonarCloud: 'DEVSECOPS-USACH'
+    organization: 'rsanzana-devsecops-usach'
+
