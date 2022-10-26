@@ -50,6 +50,16 @@ stages:
   - job: SCA
     displayName: 'SCA'
     steps:
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
     - task: dependency-check-build-task@6
       inputs:
         projectName: 'spring-boot-kubernetes'
