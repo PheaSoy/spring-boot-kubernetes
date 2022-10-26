@@ -44,23 +44,17 @@ stages:
         effectivePomSkip: false
         sonarQubeRunAnalysis: true
         sqMavenPluginVersionChoice: 'latest'
-    - task: dependency-check-build-task@6
-      inputs:
-        projectName: 'spring-boot-kubernetes'
-        scanPath: '$(Build.SourcesDirectory)/build/libs'
-        format: 'HTML'
+  
 - stage: SCA 
   jobs:
   - job: SCA
     displayName: 'SCA'
     steps:
-    - script: echo Hello, world!
-      displayName: 'Run a one-line script 2 '
-
-    - script: |
-        echo Add other tasks to build, test, and deploy your project.
-        echo See https://aka.ms/yaml
-      displayName: 'Run a multi-line script'
+    - task: dependency-check-build-task@6
+      inputs:
+        projectName: 'spring-boot-kubernetes'
+        scanPath: '$(Build.SourcesDirectory)/build/libs'
+        format: 'HTML'
 - stage: Container_Security 
   jobs:
   - job: Container_Security
