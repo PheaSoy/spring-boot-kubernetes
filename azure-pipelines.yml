@@ -29,7 +29,7 @@ stages:
       inputs:
         SonarCloud: 'sonarcloud'
         organization: 'devsecopsv4'
-        projectKey: 'DevSecOpsV4.spring-boot-kubernetes'
+        projectKey: 'DevSecOpsV4_spring-boot-kubernetes'
         projectName: 'devsecopsv4'
     - task: Maven@4
       inputs:
