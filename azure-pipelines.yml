@@ -67,3 +67,10 @@ stages:
       inputs:
         containerRegistry: 'Docker'
         command: 'login'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker'
+        repository: 'maurobahamondes/spring-boot-kubernetes'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: 'latest'
