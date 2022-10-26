@@ -60,6 +60,16 @@ stages:
   - job: Container_Security
     displayName: 'Container Security'
     steps:
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
     - task: DockerInstaller@0
       inputs:
         dockerVersion: '17.09.0-ce'
