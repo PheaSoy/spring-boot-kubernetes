@@ -12,3 +12,12 @@ steps:
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'dsilvar'
+    scannerMode: 'MSBuild'
+    projectKey: 'dsilvar_spring-boot-kubernetes'
+    projectName: 'SpringBoot'
+
