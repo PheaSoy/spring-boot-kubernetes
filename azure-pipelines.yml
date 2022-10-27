@@ -17,7 +17,6 @@ steps:
   inputs:
     SonarCloud: 'SonarCloud'
     organization: 'dsilvar'
-    scannerMode: 'MSBuild'
     projectKey: 'dsilvar_spring-boot-kubernetes'
     projectName: 'SpringBoot'
 
