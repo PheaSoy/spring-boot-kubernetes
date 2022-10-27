@@ -1,6 +1,7 @@
 package org.soyphea.k8s;
 
 public class Credentials2 {
+  /*
   public void getCredentials() {
     String inputString = "s3cr37";
     byte[] key         = inputString.getBytes();
@@ -13,4 +14,5 @@ public class Credentials2 {
     ScriptEngine engine = manager.getEngineByName("JavaScript");
     engine.eval(input); // Noncompliant
   }
+  */
 }
