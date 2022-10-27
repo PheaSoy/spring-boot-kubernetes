@@ -1,5 +1,4 @@
 package org.soyphea.k8s;
-import org.h2.security.SHA256;
 
 public class Credentials2 {
   public void getCredentials() {
