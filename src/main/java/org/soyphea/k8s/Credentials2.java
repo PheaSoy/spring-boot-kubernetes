@@ -6,7 +6,7 @@ public class Credentials2 {
     byte[] key         = inputString.getBytes();
   }
   
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
     String input = req.getParameter("input");
 
     ScriptEngineManager manager = new ScriptEngineManager();
