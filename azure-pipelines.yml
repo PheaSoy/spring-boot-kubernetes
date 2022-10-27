@@ -11,6 +11,41 @@ pool:
 
 
 stages:
+- stage: SAST
+  jobs:
+  - job:
+    steps:
+    - task: Maven@4 
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'Sonarcloud'
+        organization: 'fabianes00'
+        projectKey: 'Fabianes00_spring-boot-kubernetes'
+        projectName: 'spring-boot-kubernetes'
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: true
+        sqMavenPluginVersionChoice: 'latest'
+    - task: sonarcloud-buildbreaker@2
+      inputs:
+        SonarCloud: 'Sonarcloud'
+        organization: 'fabianes00'
 
 - stage: SCA
   jobs:
