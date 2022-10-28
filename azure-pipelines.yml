@@ -29,6 +29,8 @@ stages:
     
     - script: |
         echo Analiza contenido JSON
-        tail /home/vsts/work/1/TestResults/dependency-check/reporteEjecucion.json
+        echo Path: /home/vsts/work/1/TestResults/dependency-check/reporteEjecucion.json
+        tail -5000 /home/vsts/work/1/TestResults/dependency-check/reporteEjecucion.json
+        
       displayName: 'Analiza JSON'
 
