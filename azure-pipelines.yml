@@ -109,13 +109,13 @@ stages:
 
     - task: Docker@2
       inputs:
-        containerRegistry: 'DockerConecctionTest'
+        containerRegistry: 'DockerServiceConnection'
         command: 'login'
       displayName: 'Docker Login'
 
     - task: Docker@2
       inputs:
-        containerRegistry: 'DockerConecctionTest'
+        containerRegistry: 'DockerServiceConnection'
         command: 'build'
         repository: silvarudillo/spring-boot-kubernetes
         Dockerfile: '**/Dockerfile'
@@ -134,7 +134,7 @@ stages:
 
     - task: Docker@2
       inputs:
-        containerRegistry: 'DockerConecctionTest'
+        containerRegistry: 'DockerServiceConnection'
         repository: 'silvarudillo/spring-boot-kubernetes'
         command: 'push'
         tags: 'latest'
