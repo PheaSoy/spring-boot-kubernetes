@@ -31,6 +31,9 @@ stages:
         projectName: 'spring-boot-kubernetes'
         scanPath: '$(Build.SourcesDirectory)/target'
         format: 'JSON'
-        failOnCVSS: '0'
-        reportFilename: 'reporteEjecucion'
-        warnOnCVSSViolation: true
+        reportFilename: 'reporteEjecucion.json'
+    
+    - script: |
+        echo Analiza contenido JSON
+        find | grep reporteEjecucion.json
+        
