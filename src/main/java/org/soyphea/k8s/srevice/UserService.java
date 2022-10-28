@@ -23,7 +23,7 @@ public class UserService {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
-
+        char[] chars = {'r', 's', 't', 'u', 'v'};
         PBEParameterSpec cipherSpec = new PBEParameterSpec(salt, 10000); // Compliant
         PBEKeySpec spec = new PBEKeySpec(chars, salt, 10000, 256); // Compliant
     }
