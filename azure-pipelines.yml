@@ -29,10 +29,15 @@ stages:
     
     - script: |
         echo Analiza contenido JSON
+        echo Analizando resultado del reporte Dependency Check Build
         echo Path: /home/vsts/work/1/TestResults/dependency-check/reporte
-        cd /home/vsts/work/1/TestResults/dependency-check
-        ls 
-        
-        
-      displayName: 'Analiza JSON'
 
+        if [ $(grep -Po '"confidence":.*?[^\\]",' $(Build.SourcesDirectory)/reporte/dependency-check-report.json | grep '"HIGH"\|"HIGHEST"' | wc -l) -gt 0 ]
+        then
+          echo "Se ha encontrado una vulnerabilidad HIGH/HIGHEST"
+          echo "No se puede continuar con el analisis debe corregir esta vulnerabilidad"
+        else
+          echo "No se han encontrado vulneravilidades"
+          echo "Analisis completo"
+        fi
+      displayName: 'Analiza JSON'
