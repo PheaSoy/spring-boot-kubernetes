@@ -54,3 +54,4 @@ stages:
         projectName: 'spring-boot-kubernetes'
         scanPath: '$(Build.SourcesDirectory)/'
         format: 'HTML'
+        
