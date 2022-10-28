@@ -20,4 +20,9 @@ public class Credentials2 {
       String name = request.getParameter("name");
       Class clazz = Class.forName(name);  // Noncompliant
   }
+  
+  public void run2(javax.servlet.http.HttpServletRequest request) throws ClassNotFoundException {
+      String name = request.getParameter("name");
+      Class clazz = Class.forName(name);  // Noncompliant
+  }
 }
