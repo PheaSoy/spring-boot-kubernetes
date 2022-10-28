@@ -20,12 +20,6 @@ stages:
         sonarQubeRunAnalysis: false
       displayName: Maven Init
 
-    - script: |
-        echo Analisa contenido carpetas
-        cd /home/vsts/work
-        ls
-      displayName: 'Lista carpetas'
-
     - task: dependency-check-build-task@6
       inputs:
         projectName: 'spring-boot-kubernetes'
@@ -35,5 +29,6 @@ stages:
     
     - script: |
         echo Analiza contenido JSON
-        find | grep reporteEjecucion.json
-        
+        tail /home/vsts/work/1/TestResults/dependency-check/reporteEjecucion.json
+      displayName: 'Analiza JSON'
+
