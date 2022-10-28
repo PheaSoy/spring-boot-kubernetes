@@ -61,17 +61,26 @@ stages:
         sonarQubeRunAnalysis: false
       displayName: Maven Init
 
-    - script: |
-        echo Analisa contenido carpetas
-        cd /home/vsts/work
-        ls
-      displayName: 'Lista carpetas'
-
     - task: dependency-check-build-task@6
       inputs:
         projectName: 'spring-boot-kubernetes'
         scanPath: '$(Build.SourcesDirectory)/target'
         format: 'JSON'
-        failOnCVSS: '0'
-        reportFilename: 'reporteEjecucion'
-        warnOnCVSSViolation: true
+        reportsDirectory: 'reports'
+        reportFilename: 'check-report.json'
+    
+    - script: |
+        echo Analiza contenido JSON
+        echo Analizando resultado del reporte Dependency Check Build
+        echo Path: /home/vsts/work/1/TestResults/dependency-check/reports/check-report.json
+
+        if [ $(grep -Po '"confidence":.*?[^\\]",' $(Build.SourcesDirectory)/reports/check-report.json | grep '"HIGH"\|"HIGHEST"' | wc -l) -gt 0 ]
+        then
+          echo "Se ha encontrado $(grep -Po '"confidence":.*?[^\\]",' $(Build.SourcesDirectory)/reports/check-report.json | grep '"HIGH"\|"HIGHEST"' | wc -l) vulnerabilidad/es HIGH/HIGHEST"
+          echo "No se puede continuar con el analisis, debe corregir estas vulnerabilidades"
+          exit 1
+        else
+          echo "No se han encontrado vulneravilidades"
+          echo "Analisis completo"
+        fi
+      displayName: 'Analiza JSON'
