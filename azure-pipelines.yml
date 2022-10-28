@@ -78,7 +78,7 @@ stages:
         then
           echo "Se ha encontrado $(grep -Po '"confidence":.*?[^\\]",' $(Build.SourcesDirectory)/reports/check-report.json | grep '"HIGH"\|"HIGHEST"' | wc -l) vulnerabilidad/es HIGH/HIGHEST"
           echo "No se puede continuar con el analisis, debe corregir estas vulnerabilidades"
-          #exit 1
+          # exit 1
         else
           echo "No se han encontrado vulneravilidades"
           echo "Analisis completo"
@@ -128,8 +128,8 @@ stages:
         wget https://github.com/aquasecurity/trivy/releases/download/v0.27.1/trivy_0.27.1_Linux-64bit.deb
         sudo dpkg -i trivy_0.27.1_Linux-64bit.deb
         trivy image silvarudillo/spring-boot-kubernetes
-        trivy image --exit-code 0 --severity MEDIUM ruby:2.4.0
-        trivy image --exit-code 1 --severity HIGH, CRITICAL ruby:2.4.0 
+        # trivy image --exit-code 0 --severity MEDIUM ruby:2.4.0
+        # trivy image --exit-code 1 --severity HIGH, CRITICAL ruby:2.4.0 
       displayName: Trivy Image Scan
 
     - task: Docker@2
