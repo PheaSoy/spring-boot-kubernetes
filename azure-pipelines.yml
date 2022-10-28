@@ -46,3 +46,11 @@ stages:
         sudo dpkg -i trivy_0.27.1_Linux-64bit.deb
         trivy image silvarudillo/spring-boot-kubernetes
       displayName: Trivy Image Scan
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerConecctionTest'
+        repository: 'silvarudillo/spring-boot-kubernetes'
+        command: 'push'
+        tags: 'latest'
+      displayName: 'Docker Push'
