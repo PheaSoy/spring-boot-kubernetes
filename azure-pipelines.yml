@@ -63,13 +63,15 @@ stages:
 
     - script: |
         echo Analisa contenido carpetas
+        cd /home/vsts/work
+        ls
       displayName: 'Lista carpetas'
 
     - task: dependency-check-build-task@6
       inputs:
         projectName: 'spring-boot-kubernetes'
-        scanPath: '$(Build.SourceDirectory)/target'
-        format: 'JUNIT'
+        scanPath: '$(Build.SourcesDirectory)/target'
+        format: 'JSON'
         failOnCVSS: '0'
         reportFilename: 'reporteEjecucion'
         warnOnCVSSViolation: true
