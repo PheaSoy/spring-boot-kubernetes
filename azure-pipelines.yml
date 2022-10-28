@@ -28,3 +28,13 @@ stages:
       inputs:
         containerRegistry: 'DockerConecctionTest'
         command: 'login'
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerConecctionTest'
+        command: 'build'
+        repository: silvarudillo/spring-boot-kubernetes
+        Dockerfile: '**/Dockerfile'
+        tags: 'latest'
+
+    
