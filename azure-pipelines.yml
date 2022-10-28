@@ -44,10 +44,10 @@ stages:
         SonarCloud: 'SonarCloud'
         organization: 'dsilvar'
 
-- stage: SAST
+- stage: SCA
   jobs:
   - job: Job
-    displayName: Analisis SAST
+    displayName: Revision SCA
     steps:
     - task: dependency-check-build-task@6
       inputs:
