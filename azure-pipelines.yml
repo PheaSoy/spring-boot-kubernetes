@@ -26,5 +26,5 @@ stages:
 
     - task: Docker@2
       inputs:
-        containerRegistry: 'DockerServiceConnection'
+        containerRegistry: 'DockerConnectionTest'
         command: 'login'
