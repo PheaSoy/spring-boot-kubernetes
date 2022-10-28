@@ -48,6 +48,7 @@ stages:
   - job: Job
     displayName: Revision SCA
     steps:
+
     - task: Maven@4
       inputs:
         mavenPomFile: 'pom.xml'
@@ -59,9 +60,12 @@ stages:
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
       displayName: Maven Init
+
     - task: dependency-check-build-task@6
       inputs:
         projectName: 'spring-boot-kubernetes'
-        scanPath: '$(Build.SourcesDirectory)/target'
-        format: 'JSON'
-        reportsDirectory: 'reporte'
+        scanPath: '$(Build.SourceDirectory)/target'
+        format: 'JUNIT'
+        failOnCVSS: '0'
+        reportFilename: 'reporteEjecucion'
+        warnOnCVSSViolation: true
