@@ -28,6 +28,7 @@ stages:
       inputs:
         containerRegistry: 'DockerConecctionTest'
         command: 'login'
+      displayName: 'Docker Login'
 
     - task: Docker@2
       inputs:
@@ -36,6 +37,7 @@ stages:
         repository: silvarudillo/spring-boot-kubernetes
         Dockerfile: '**/Dockerfile'
         tags: 'latest'
+      displayName: 'Docker Build'
 
     - script: |
         echo Instala Trivy Image Scan
@@ -43,4 +45,4 @@ stages:
         wget https://github.com/aquasecurity/trivy/releases/download/v0.27.1/trivy_0.27.1_Linux-64bit.deb
         sudo dpkg -i trivy_0.27.1_Linux-64bit.deb
         trivy image silvarudillo/spring-boot-kubernetes
-        displayName: Trivy Image Scan
+      displayName: Trivy Image Scan
