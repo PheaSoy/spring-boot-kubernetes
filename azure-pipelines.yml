@@ -52,6 +52,11 @@ stages:
     - task: dependency-check-build-task@6
       inputs:
         projectName: 'spring-boot-kubernetes'
-        scanPath: '$(Build.SourcesDirectory)/'
-        format: 'HTML'
-        
+        scanPath: '$(Build.SourcesDirectory)/target'
+        format: 'JSON'
+        reportsDirectory: 'reporte'
+      
+    - task: sonarcloud-buildbreaker@2
+      inputs:
+        SonarCloud: 'SonarCloud'
+        organization: 'dsilvar'
