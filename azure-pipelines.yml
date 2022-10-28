@@ -44,3 +44,13 @@ stages:
         SonarCloud: 'SonarCloud'
         organization: 'dsilvar'
 
+- stage: SAST
+  jobs:
+  - job: Job
+    displayName: Analisis SAST
+    steps:
+    - task: dependency-check-build-task@6
+      inputs:
+        projectName: 'spring-boot-kubernetes'
+        scanPath: '$(Build.SourcesDirectory)/build/libs'
+        format: 'HTML'
