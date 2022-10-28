@@ -19,7 +19,7 @@ stages:
           sonarQubeRunAnalysis: false
       - task: SonarCloudPrepare@1
         inputs:
-          SonarCloud: 'Sonarcloud_serv_conx'
+          SonarCloud: 'DEVSECOPS-USACH'
           organization: 'rsanzana-devsecops-usach'
           projectKey: 'RSANZANA-DEVSECOPS-USACH_spring-boot-kubernetes'
           projectName: 'spring-boot-kubernetes'      
@@ -36,7 +36,7 @@ stages:
           sqMavenPluginVersionChoice: 'latest'
       - task: sonarcloud-buildbreaker@2
         inputs:
-          SonarCloud: 'Sonarcloud_serv_conx'
+          SonarCloud: 'DEVSECOPS-USACH'
           organization: 'rsanzana-devsecops-usach'
 - stage: SCA_
   jobs:
