@@ -38,7 +38,6 @@ stages:
         sonarQubeRunAnalysis: true
         sqMavenPluginVersionChoice: 'latest'
 
-
     - task: sonarcloud-buildbreaker@2
       inputs:
         SonarCloud: 'SonarCloud'
@@ -55,8 +54,3 @@ stages:
         scanPath: '$(Build.SourcesDirectory)/target'
         format: 'JSON'
         reportsDirectory: 'reporte'
-      
-    - task: sonarcloud-buildbreaker@2
-      inputs:
-        SonarCloud: 'SonarCloud'
-        organization: 'dsilvar'
