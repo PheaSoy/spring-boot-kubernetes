@@ -24,13 +24,15 @@ stages:
       inputs:
         projectName: 'spring-boot-kubernetes'
         scanPath: '$(Build.SourcesDirectory)/target'
-        format: 'JSON'
-        reportFilename: 'reporteEjecucion.json'
+        format: 'JUNIT'
+        reportFilename: 'reporte'
     
     - script: |
         echo Analiza contenido JSON
-        echo Path: /home/vsts/work/1/TestResults/dependency-check/reporteEjecucion.json
-        $(tail -5000 /home/vsts/work/1/TestResults/dependency-check/reporteEjecucion.json)
+        echo Path: /home/vsts/work/1/TestResults/dependency-check/reporte
+        cd /home/vsts/work/1/TestResults/dependency-check
+        ls 
+        
         
       displayName: 'Analiza JSON'
 
