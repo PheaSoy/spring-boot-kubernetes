@@ -61,6 +61,10 @@ stages:
         sonarQubeRunAnalysis: false
       displayName: Maven Init
 
+    - script: |
+        echo Analisa contenido carpetas
+      displayName: 'Lista carpetas'
+
     - task: dependency-check-build-task@6
       inputs:
         projectName: 'spring-boot-kubernetes'
