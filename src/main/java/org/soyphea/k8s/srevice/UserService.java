@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.security.SecureRandom;
 import javax.crypto.spec.PBEParameterSpec;
-import javax.crypto.spec.PBEKeySpec
+import javax.crypto.spec.PBEKeySpec;
 
 @Service
 public class UserService {
