@@ -20,7 +20,7 @@ pipeline {
                       SCA = '/previred_3/dependency-check/bin/dependency-check.sh'
 
                       //SAST
-                      SONAR_URL = 'https://sonarcloud.io'
+                      SONAR_URL = 'https://sonarcloud.io/'
                       SONAR_LOGIN = '3c847113f9c8487d0890268839acb874e348789b'
                       SONAR_PROJECT_ORG = 'rsanzana-devsecops-usach'
                       SONAR_PROJECT_KEY = 'RSANZANA-DEVSECOPS-USACH_spring-boot-kubernetes'
@@ -28,7 +28,7 @@ pipeline {
                       SONAR_SERVER = 'SonarCloud'
                       SONAR_FILE_NAME = "sonar-project.properties"
                       SONAR_JAVA_HOME = tool "jdk-11"
-                      SONAR_SCANNER_HOME = tool "sonar_scanner_4.6.0.2311"
+                      SONAR_SCANNER_HOME = tool "SONAR_LATEST"
 
                       // BUILDING
     				          JAVA_HOME = tool "jdk1.8.0_181"
