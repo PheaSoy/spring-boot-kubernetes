@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.security.SecureRandom;
 import java.io.FileOutputStream;
 import java.nio.charset.Charset;
+import java.io.IOException;
 
 import javax.crypto.spec.PBEParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
