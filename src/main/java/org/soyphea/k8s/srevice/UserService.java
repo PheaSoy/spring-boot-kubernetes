@@ -2,12 +2,17 @@ package org.soyphea.k8s.srevice;
 
 import org.soyphea.k8s.domain.User;
 import org.springframework.stereotype.Service;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.security.SecureRandom;
+import java.io.FileOutputStream;
+import java.nio.charset.Charset
+
 import javax.crypto.spec.PBEParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class UserService {
@@ -26,6 +31,12 @@ public class UserService {
         char[] chars = {'r', 's', 't', 'u', 'v'};
         PBEParameterSpec cipherSpec = new PBEParameterSpec(salt, 10000); // Compliant
         PBEKeySpec spec = new PBEKeySpec(chars, salt, 10000, 256); // Compliant
+    }
+    
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String xml = "<node id=\""+req.getParameter("id")+\"></node>";
+        FileOutputStream fos = new FileOutputStream("output.xml");
+        fos.write(xml.getBytes(Charset.forName("UTF-8")));  // Noncompliant
     }
 
 }
