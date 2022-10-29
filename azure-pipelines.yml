@@ -25,3 +25,4 @@ steps:
   inputs:
     SonarCloud: 'DEVSECOPS-USACH'
     organization: 'rsanzana-devsecops-usach'
+    
