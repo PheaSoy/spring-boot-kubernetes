@@ -53,17 +53,6 @@ pipeline {
 
     				}
 
-	parameters {
-
-             string (
-                     defaultValue: 'https://dev1.previred.com',
-                     name: 'urls',
-                     description: 'Ingresar la URL a escanear solo si el tipo de prueba es ( DAST ) "Debe ser ej: https://dev1.previred.com / https://qademanda.portalafp.cl"',
-                     trim: true
-                   )
-
- 		       }
-
  stages {
 
 
@@ -197,34 +186,5 @@ stage('BUILD') {
 
 //TERMINO SCA ------------------------------------------------------------------------------------
 
-//INICIO DAST ------------------------------------------------------------------------------------
-
-	stage('DAST - OWASP') {
-
-          steps {
-                script {
-
-                            try {
-                                echo "Inicio de Scan Dinamico BASE -------------------------------------------------------------------------------------"
-                                figlet 'DAST - OWASP'
-
-                                sh " sudo ${DOCKER_EXEC} run --rm -v ${WORKSPACE}:/zap/wrk/:rw --user root -t owasp/zap2docker-stable zap-baseline.py -t ${params.urls} -r ${REPORT_DAST}"
-                                currentBuild.result = 'SUCCESS'
-                                }
-
-                            catch (Exception e) {
-                                                  //echo e.getMessage()
-                                                  //currentBuild.result = 'FAIL'
-
-                                                  println ("Revisar Reporte ZAP. Se encontraron Vulnerabilidades.")
-
-                                                  dir("${WORKSPACE}"){
-                                                    echo "Generando Reporte HTML"
-                                                    sh "sudo chown ${USER}.${USER} ${WORKSPACE}/${REPORT_DAST}"
-                                                    archiveArtifacts "${REPORT_DAST}" }
-                                                }
-                      }
-                }
-    }
   }
 }
