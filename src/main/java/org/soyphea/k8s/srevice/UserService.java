@@ -34,7 +34,7 @@ public class UserService {
     }
     
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String xml = "<node id=\""+req.getParameter("id")+\"></node>";
+        String xml = "<node id=\"" + req.getParameter("id") + "\"></node>";
         FileOutputStream fos = new FileOutputStream("output.xml");
         fos.write(xml.getBytes(Charset.forName("UTF-8")));  // Noncompliant
     }
