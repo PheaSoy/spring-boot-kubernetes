@@ -28,7 +28,7 @@ pipeline {
                       SONAR_SERVER = 'SonarCloud'
                       SONAR_FILE_NAME = "sonar-project.properties"
                       SONAR_JAVA_HOME = tool "jdk-11"
-                      SONAR_SCANNER_HOME = tool "SONAR_LATEST"
+                      SONAR_SCANNER_HOME = tool "sonar_scanner_4.6.0.2311"
 
                       // BUILDING
     				          JAVA_HOME = tool "jdk1.8.0_181"
