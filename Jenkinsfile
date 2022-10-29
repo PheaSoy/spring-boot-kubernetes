@@ -37,7 +37,7 @@ pipeline {
 
     				          GIT_CREDENTIALS = ''
                       GIT_CHECKOUT_SRC_DIR = 'source_code'
-                      GIT_BRANCH = 'main'
+                      GIT_BRANCH = '*/final-lab-rsanzana'
 
                       // rutas con archivos de integracion
     				          CICD_PROJECT_NAME = 'DevSecOps'
