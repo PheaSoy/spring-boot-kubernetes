@@ -1,6 +1,14 @@
 def GIT_REPOSITORY = 'https://github.com/RSANZANA-DEVSECOPS-USACH/spring-boot-kubernetes.git'
 
 pipeline {
+
+  options {
+
+    timeout(20)
+    buildDiscarder(logRotator(numToKeepStr: '10'))
+
+  }
+  
 	agent any
 		environment {
 
