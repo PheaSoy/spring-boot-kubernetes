@@ -28,7 +28,7 @@ pipeline {
                       SONAR_SERVER = 'SonarCloud'
                       SONAR_FILE_NAME = "sonar-project.properties"
                       SONAR_JAVA_HOME = tool "jdk-11"
-                      SONAR_SCANNER_HOME = tool "sonar_scanner_4.6.0.2311"
+                      SONAR_SCANNER_HOME = tool "SONAR_LATEST"
 
                       // BUILDING
     				          JAVA_HOME = tool "jdk1.8.0_181"
@@ -131,8 +131,9 @@ stage('BUILD') {
 
             dir("${BUILD_SOURCE_DIR_PATH}"){
 
+              withEnv(["JAVA_HOME=${JAVA_HOME}"]){
                 sh "${MAVEN_HOME}/bin/mvn clean package"
-
+              }
             }
 
       }
