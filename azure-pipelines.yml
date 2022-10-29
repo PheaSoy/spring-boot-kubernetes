@@ -17,7 +17,6 @@ steps:
   inputs:
     SonarCloud: 'DEVSECOPS-USACH'
     organization: 'rsanzana-devsecops-usach'
-    scannerMode: 'MSBuild'
     projectKey: 'RSANZANA-DEVSECOPS-USACH_spring-boot-kubernetes'
     projectName: 'spring-boot-kubernetes'
 
