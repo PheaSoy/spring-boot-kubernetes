@@ -20,7 +20,8 @@ pipeline {
                       SCA = '/previred_3/dependency-check/bin/dependency-check.sh'
 
                       //SAST
-
+                      SONAR_URL = 'https://sonarcloud.io/'
+                      SONAR_LOGIN = '3c847113f9c8487d0890268839acb874e348789b'
                       SONAR_PROJECT_ORG = 'rsanzana-devsecops-usach'
                       SONAR_PROJECT_KEY = 'RSANZANA-DEVSECOPS-USACH_spring-boot-kubernetes'
 					            SONAR_PROJECT_NAME = 'spring-boot-kubernetes'
@@ -150,13 +151,15 @@ stage('BUILD') {
 
                  			dir("${BUILD_SOURCE_DIR_PATH}"){
                             withEnv(["JAVA_HOME=${SONAR_JAVA_HOME}"]){
-                             withSonarQubeEnv(credentialsId: 'Sonarcloud-DevOps', installationName: 'SonarCloud') {
-                              sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.projectName=${SONAR_PROJECT_NAME} -Dsonar.organization=${SONAR_PROJECT_ORG} -Dsonar.java.binaries=."
-   							 }
+                            sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                            -Dsonar.host.url= ${SONAR_URL} \
+                            -Dsonar.login= ${SONAR_LOGIN} \
+                            -Dsonar.projectName=${SONAR_PROJECT_NAME} -Dsonar.organization=${SONAR_PROJECT_ORG} \
+                            -Dsonar.java.binaries=."
 						}
-                      }
-        			}
-        		}
+          }
+  			}
+  		}
 
 //TERMINO SAST ------------------------------------------------------------------------------------
 
@@ -224,4 +227,3 @@ stage('BUILD') {
     }
   }
 }
-
