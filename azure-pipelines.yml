@@ -1,115 +1,26 @@
 pool:
   vmImage: ubuntu-latest
 
-stages:
-- stage: SAST_
-  jobs:
-  - job: J1
-    displayName: SAST
-    steps:
-      - task: Maven@4
-        inputs:
-          mavenPomFile: 'pom.xml'
-          publishJUnitResults: true
-          testResultsFiles: '**/surefire-reports/TEST-*.xml'
-          javaHomeOption: 'JDKVersion'
-          mavenVersionOption: 'Default'
-          mavenAuthenticateFeed: false
-          effectivePomSkip: false
-          sonarQubeRunAnalysis: false
-      - task: SonarCloudPrepare@1
-        inputs:
-          SonarCloud: 'DEVSECOPS-USACH'
-          organization: 'rsanzana-devsecops-usach'
-          projectKey: 'RSANZANA-DEVSECOPS-USACH_spring-boot-kubernetes'
-          projectName: 'spring-boot-kubernetes'      
-      - task: Maven@4
-        inputs:
-          mavenPomFile: 'pom.xml'
-          publishJUnitResults: true
-          testResultsFiles: '**/surefire-reports/TEST-*.xml'
-          javaHomeOption: 'JDKVersion'
-          mavenVersionOption: 'Default'
-          mavenAuthenticateFeed: false
-          effectivePomSkip: false
-          sonarQubeRunAnalysis: true
-          sqMavenPluginVersionChoice: 'latest'
-      - task: sonarcloud-buildbreaker@2
-        inputs:
-          SonarCloud: 'DEVSECOPS-USACH'
-          organization: 'rsanzana-devsecops-usach'
-- stage: SCA_
-  jobs:
-  - job: J2
-    displayName: SCA
-    steps:
-      - task: Maven@4
-        inputs:
-          mavenPomFile: 'pom.xml'
-          publishJUnitResults: true
-          testResultsFiles: '**/surefire-reports/TEST-*.xml'
-          javaHomeOption: 'JDKVersion'
-          mavenVersionOption: 'Default'
-          mavenAuthenticateFeed: false
-          effectivePomSkip: false
-          sonarQubeRunAnalysis: false
-      - script: echo etapa SCA!
-        displayName: 'Run dependency checks'
-      - task: dependency-check-build-task@6
-        inputs:
-          projectName: 'spring-boot-kubernetes'
-          scanPath: '$(Build.SourcesDirectory)/target/*'
-          format: 'ALL'
-          reportsDirectory: '$(Build.SourcesDirectory)/resultados'
-      - script: |
-          #echo "$(<$(Build.SourcesDirectory)/resultados/dependency-check-report.csv )"
-          vulne=$(grep ",HIGH," $(Build.SourcesDirectory)/resultados/dependency-check-report.csv | wc -l)          
-          if [ $vulne -gt 0 ];
-          then 
-            echo $vulne "HIGH Vulnerabilidades encontradas"
-            echo "Proceso Pipeline detenido: HIGH Vulnerabilities"
-            exit 1;
-          fi;
-- stage: Container_Security_
-  jobs:
-    - job: J3
-      displayName: Container-Security
-      steps:
-        - task: Maven@4
-          inputs:
-            mavenPomFile: 'pom.xml'
-            publishJUnitResults: true
-            testResultsFiles: '**/surefire-reports/TEST-*.xml'
-            javaHomeOption: 'JDKVersion'
-            mavenVersionOption: 'Default'
-            mavenAuthenticateFeed: false
-            effectivePomSkip: false
-            sonarQubeRunAnalysis: false
-        - task: DockerInstaller@0
-          inputs:
-            dockerVersion: '17.09.0-ce'
-        - task: Docker@2
-          inputs:
-            containerRegistry: 'Docker'
-            command: 'login'
-        - task: Docker@2
-          inputs:
-            containerRegistry: 'Docker'
-            repository: 'rsanzana/spring-boot-kubernetes'
-            command: 'build'
-            Dockerfile: '**/Dockerfile'
-            tags: 'latest'
-        - script: |
-            sudo apt-get install -y rpm
-            wget https://github.com/aquasecurity/trivy/releases/download/v0.27.1/trivy_0.27.1_Linux-64bit.deb
-            sudo dpkg -i trivy_0.27.1_Linux-64bit.deb
-            trivy image rsanzana/spring-boot-kubernetes:latest 
-            #trivy image --exit-code 0 --severity LOW,MEDIUM rsanzana/spring-boot-kubernetes:latest
-            #trivy image --exit-code 1 --severity HIGH,CRITICAL rsanzana/spring-boot-kubernetes:latest
-          displayName: Image Scan
-        - task: Docker@2
-          inputs:
-            repository: 'rsanzana/spring-boot-kubernetes'
-            command: 'push'
-            containerRegistry: 'Docker'
-            tags: 'latest'
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'latest'
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'DEVSECOPS-USACH'
+    organization: 'rsanzana-devsecops-usach'
+    scannerMode: 'MSBuild'
+    projectKey: 'RSANZANA-DEVSECOPS-USACH_spring-boot-kubernetes'
+    projectName: 'spring-boot-kubernetes'
+
+- task: sonarcloud-buildbreaker@2
+  inputs:
+    SonarCloud: 'DEVSECOPS-USACH'
+    organization: 'rsanzana-devsecops-usach'
