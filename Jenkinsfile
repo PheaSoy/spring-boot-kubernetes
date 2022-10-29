@@ -152,7 +152,7 @@ stage('BUILD') {
 
                  			dir("${BUILD_SOURCE_DIR_PATH}"){
                             withEnv(["JAVA_HOME=${SONAR_JAVA_HOME}"]){
-                            sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                            sh "${SONAR_SCANNER_HOME}/bin/sonar-scanner -X -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
                             -Dsonar.host.url=${SONAR_URL} \
                             -Dsonar.login=${SONAR_LOGIN} \
                             -Dsonar.projectName=${SONAR_PROJECT_NAME} -Dsonar.organization=${SONAR_PROJECT_ORG} \
