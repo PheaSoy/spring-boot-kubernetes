@@ -1,6 +1,6 @@
 public void run(javax.servlet.http.HttpServletRequest request) throws ClassNotFoundException {
-    String name = request.getParameter("name");
-    if (this.allowed.contains(name)) {
-        Class clazz = Class.forName(name);
+    String sast = request.getParameter("sast");
+    if (this.allowed.contains(sast)) {
+        Class clazz = Class.forName(sast);
     }
 }
