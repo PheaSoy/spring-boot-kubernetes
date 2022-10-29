@@ -26,9 +26,7 @@ steps:
     publishJUnitResults: false
     javaHomeOption: 'JDKVersion'
     mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false    
+    sonarQubeRunAnalysis: true    
 
 - task: sonarcloud-buildbreaker@2
   inputs:
