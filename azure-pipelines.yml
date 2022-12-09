@@ -1,0 +1,58 @@
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Container
+  jobs:
+  - job: JobTest
+    displayName: Container Security
+    steps:
+
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+      displayName: Maven Init
+
+    - task: DockerInstaller@0
+      inputs:
+        dockerVersion: '17.09.0-ce'
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerConecctionTest'
+        command: 'login'
+      displayName: 'Docker Login'
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerConecctionTest'
+        command: 'build'
+        repository: silvarudillo/spring-boot-kubernetes
+        Dockerfile: '**/Dockerfile'
+        tags: 'latest'
+      displayName: 'Docker Build'
+
+    - script: |
+        echo Instala Trivy Image Scan
+        sudo apt-get install -y rpm
+        wget https://github.com/aquasecurity/trivy/releases/download/v0.27.1/trivy_0.27.1_Linux-64bit.deb
+        sudo dpkg -i trivy_0.27.1_Linux-64bit.deb
+        trivy image silvarudillo/spring-boot-kubernetes
+        trivy image --exit-code 0 --severity MEDIUM ruby:2.4.0
+        trivy image --exit-code 1 --severity HIGH, CRITICAL ruby:2.4.0 
+      displayName: Trivy Image Scan
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerConecctionTest'
+        repository: 'silvarudillo/spring-boot-kubernetes'
+        command: 'push'
+        tags: 'latest'
+      displayName: 'Docker Push'
