@@ -1,0 +1,108 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: SAST 
+  jobs:
+  - job: SAST
+    displayName: 'SAST'
+    steps:
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'sonarcloud'
+        organization: 'devsecopsv4'
+        projectKey: 'DevSecOpsV4_spring-boot-kubernetes'
+        projectName: 'devsecopsv4'
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'clean verify sonar:sonar'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.11'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: true
+        sqMavenPluginVersionChoice: 'latest'
+  
+- stage: SCA 
+  jobs:
+  - job: SCA
+    displayName: 'SCA'
+    steps:
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+    - task: dependency-check-build-task@6
+      inputs:
+        projectName: 'spring-boot-kubernetes'
+        scanPath: $(System.DefaultWorkingDirectory)/target
+        format: 'HTML'
+- stage: Container_Security 
+  jobs:
+  - job: Container_Security
+    displayName: 'Container Security'
+    steps:
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+    - task: DockerInstaller@0
+      inputs:
+        dockerVersion: '17.09.0-ce'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker'
+        command: 'login'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker'
+        repository: 'maurobahamondes/spring-boot-kubernetes'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: 'latest'
+    - script: | 
+        sudo apt-get install -y rpm
+        wget https://github.com/aquasecurity/trivy/releases/download/v0.27.1/trivy_0.27.1_Linux-64bit.deb
+        sudo dpkg -i trivy_0.27.1_Linux-64bit.deb
+        trivy image --exit-code 1 --severity HIGH maurobahamondes/spring-boot-kubernetes:latest
+      displayName: Image Scan
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker'
+        repository: 'maurobahamondes/spring-boot-kubernetes'
+        command: 'push'
+        tags: 'latest'
