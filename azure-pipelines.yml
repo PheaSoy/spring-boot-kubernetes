@@ -1,0 +1,141 @@
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: SAST
+  jobs:
+  - job: Job
+    displayName: Analisis SAST
+    steps:
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+      displayName: Maven Init
+
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'SonarCloud'
+        organization: 'dsilvar'
+        projectKey: 'dsilvar_spring-boot-kubernetes'
+        projectName: 'SpringBoot'
+
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: true
+        sqMavenPluginVersionChoice: 'latest'
+
+    - task: sonarcloud-buildbreaker@2
+      inputs:
+        SonarCloud: 'SonarCloud'
+        organization: 'dsilvar'
+
+- stage: SCA
+  jobs:
+  - job: Job
+    displayName: Revision SCA
+    steps:
+
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+      displayName: Maven Init
+
+    - task: dependency-check-build-task@6
+      inputs:
+        projectName: 'spring-boot-kubernetes'
+        scanPath: '$(Build.SourcesDirectory)/target'
+        format: 'JSON'
+        reportsDirectory: 'reports'
+        reportFilename: 'check-report.json'
+    
+    - script: |
+        echo Analiza contenido JSON
+        echo Analizando resultado del reporte Dependency Check Build
+        echo Path: /home/vsts/work/1/TestResults/dependency-check/reports/check-report.json
+
+        if [ $(grep -Po '"confidence":.*?[^\\]",' $(Build.SourcesDirectory)/reports/check-report.json | grep '"HIGH"\|"HIGHEST"' | wc -l) -gt 0 ]
+        then
+          echo "Se ha encontrado $(grep -Po '"confidence":.*?[^\\]",' $(Build.SourcesDirectory)/reports/check-report.json | grep '"HIGH"\|"HIGHEST"' | wc -l) vulnerabilidad/es HIGH/HIGHEST"
+          echo "No se puede continuar con el analisis, debe corregir estas vulnerabilidades"
+          # exit 1
+        else
+          echo "No se han encontrado vulneravilidades"
+          echo "Analisis completo"
+        fi
+      displayName: 'Analiza JSON'
+
+- stage: Container
+  jobs:
+  - job: JobTest
+    displayName: Container Security
+    steps:
+
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+      displayName: Maven Init
+
+    - task: DockerInstaller@0
+      inputs:
+        dockerVersion: '17.09.0-ce'
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerServiceConnection'
+        command: 'login'
+      displayName: 'Docker Login'
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerServiceConnection'
+        command: 'build'
+        repository: silvarudillo/spring-boot-kubernetes
+        Dockerfile: '**/Dockerfile'
+        tags: 'latest'
+      displayName: 'Docker Build'
+
+    - script: |
+        echo Instala Trivy Image Scan
+        sudo apt-get install -y rpm
+        wget https://github.com/aquasecurity/trivy/releases/download/v0.27.1/trivy_0.27.1_Linux-64bit.deb
+        sudo dpkg -i trivy_0.27.1_Linux-64bit.deb
+        trivy image silvarudillo/spring-boot-kubernetes
+        # trivy image --exit-code 0 --severity MEDIUM ruby:2.4.0
+        # trivy image --exit-code 1 --severity HIGH, CRITICAL ruby:2.4.0 
+      displayName: Trivy Image Scan
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerServiceConnection'
+        repository: 'silvarudillo/spring-boot-kubernetes'
+        command: 'push'
+        tags: 'latest'
+      displayName: 'Docker Push'
