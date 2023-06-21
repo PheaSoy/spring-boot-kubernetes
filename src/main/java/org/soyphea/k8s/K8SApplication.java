@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Slf4j
 public class K8SApplication implements CommandLineRunner {
 
-
     @Autowired
     UserConfig userConfig;
 
